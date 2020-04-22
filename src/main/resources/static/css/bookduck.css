@@ -1,0 +1,14 @@
+.center {
+  text-align: center;
+  border: 3px solid green;
+}
+
+.left {
+  text-align: left;
+  border: 3px solid green;
+}
+
+.right {
+  text-align: right;
+  border: 3px solid green;
+}

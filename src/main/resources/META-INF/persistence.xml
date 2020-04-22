@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" version="2.1">
+
+    <persistence-unit name="hello">
+  		<class>User</class>
+        <properties>
+
+
+            <property name="javax.persistence.jdbc.user" value="bookduck"/>
+            <property name="javax.persistence.jdbc.password" value="asd4r3e2w1q"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:mariadb://222.237.83.123:32000/BOOKDUCK"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MariaDB53Dialect" />
+            
+            <!-- 옵션 -->
+            <property name="hibernate.show_sql" value="true" />
+            <property name="hibernate.format_sql" value="true" />
+            <property name="hibernate.use_sql_comments" value="true" />
+            
+            <property name="hibernate.hbm2ddl.auto" value="create" />
+        </properties>
+    </persistence-unit>
+
+</persistence>
