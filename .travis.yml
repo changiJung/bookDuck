@@ -1,7 +1,7 @@
 #test for git
 # docker build 하기 전에 일어나는 행위
 before_install:
-  - chmod +x mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+  mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 
 language: java
 install: true
