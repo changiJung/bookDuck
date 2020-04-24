@@ -1,12 +1,11 @@
 package Chan.BookShelvesMaven.Controller;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -35,6 +34,8 @@ public class UserController {
 	private BookShelvesRepository bookShelvesRepository;
 	
 
+	@Autowired
+	private PasswordEncoder bcryptEncoder;
 	
 	
 	@RequestMapping(method = RequestMethod.GET)
@@ -54,28 +55,15 @@ public class UserController {
 	//post 임시  JPA
 	@Transactional
 	@PostMapping
-	public String postUser() {
-		Date from = new Date();
-		SimpleDateFormat transFormat = new SimpleDateFormat("yyyyMMddHHmmss");
-		String to = transFormat.format(from);
-
-		User userA = new User();
-    	userA.setUserAuth("1");
-    	userA.setUserGrp("2");
-    	userA.setUserId(to);
-    	userA.setUserMail("홍길동");
-    	userA.setUserNm("22345");
-    	userA.setUserPw("3456");
+	public String postUser(User user) {
 				
-    	BookShelves bookShelves = new BookShelves();
-    	bookShelves.setUserId(userA.getUserId());
-    	bookShelves.setOpnYn("N");
-    	//bookShelves.setCreateDt(from);
-
-		userRepository.save(userA);
-    	
-		bookShelvesRepository.save(bookShelves);
-							
+		BookShelves shelves1 = new BookShelves();
+		user.setUserPw(bcryptEncoder.encode(user.getUserPw()));
+		shelves1.setUserId(user.getUserId());
+		
+		userRepository.save(user);
+		bookShelvesRepository.save(shelves1);
+    								
 		return "hey post";
 	}
 

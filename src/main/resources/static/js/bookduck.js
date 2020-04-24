@@ -18,9 +18,14 @@ function gfn_renderPaging(params){
 
 	var totalCount = params.totalCount; //전체 조회 건수 
 
-	var currentIndex = $("#"+params.pageIndex).val(); //현재 위치 
+	var currentIndex =  params.pageIndex;
+	//$("#"+params.pageIndex).val(); //현재 위치 
 
-	if($("#"+params.pageIndex).length == 0 || gfn_isNull(currentIndex) == true){ currentIndex = 1; } 
+	console.log(currentIndex);
+
+	if(params.pageIndex.length == 0 || gfn_isNull(currentIndex) == true){ 
+		currentIndex = 1; 
+	} 
 
 	var recordCount = params.recordCount; //페이지당 레코드 수 
 
@@ -35,6 +40,7 @@ function gfn_renderPaging(params){
 	var postStr = ""; 
 	
 	var str = ""; 
+
 	
 	var first = (parseInt((currentIndex-1) / 10) * 10) + 1; 
 	
@@ -43,8 +49,10 @@ function gfn_renderPaging(params){
 	var prev = (parseInt((currentIndex-1)/10)*10) - 9 > 0 ? (parseInt((currentIndex-1)/10)*10) - 9 : 1; 
 	
 	var next = (parseInt((currentIndex-1)/10)+1) * 10 + 1 < totalIndexCount ? (parseInt((currentIndex-1)/10)+1) * 10 + 1 : totalIndexCount; 
+
 	if(totalIndexCount > 10){ //전체 인덱스가 10이 넘을 경우, 맨앞, 앞 태그 작성 
 	preStr += "<a href='#this' class='pad_5' onclick='_movePage(1)'>[<<]</a>" + "<a href='#this' class='pad_5' onclick='_movePage("+prev+")'>[<]</a>"; 
+
 	}  else if(totalIndexCount <=10 && totalIndexCount > 1){ //전체 인덱스가 10보다 작을경우, 맨앞 태그 작성 
 		preStr += "<a href='#this' class='pad_5' onclick='_movePage(1)'>[<<]</a>"; 
 	} 

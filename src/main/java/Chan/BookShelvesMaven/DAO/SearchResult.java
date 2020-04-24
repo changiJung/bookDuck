@@ -4,9 +4,13 @@ package Chan.BookShelvesMaven.DAO;
 
 public class SearchResult {
 
+	private Long total;
+	private Long start;
+	private Long display;
+
 	public Long getTotal() {
 		return total;
-	}
+	}  
 	public void setTotal(Long total) {
 		this.total = total;
 	}
@@ -22,9 +26,11 @@ public class SearchResult {
 	public void setDisplay(Long display) {
 		this.display = display;
 	}
-	private Long total;
-	private Long start;
-	private Long display;
+	@Override
+	public String toString() {
+		return "SearchResult [total=" + total + ", start=" + start + ", display=" + display + "]";
+	}
+	
 	
 	
 }

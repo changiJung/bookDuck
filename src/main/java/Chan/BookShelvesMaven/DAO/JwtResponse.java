@@ -1,4 +1,4 @@
-package Chan.BookShelvesMaven.Config.Security;
+package Chan.BookShelvesMaven.DAO;
 
 import java.io.Serializable;
 

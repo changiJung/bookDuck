@@ -20,6 +20,10 @@ public class SearchBooks extends SearchResult {
 	public void setType(String type) {
 		this.type = type;
 	}
+	@Override
+	public String toString() {
+		return "SearchBooks [keyword=" + keyword + ", type=" + type + "]";
+	}
 	
 	
 	

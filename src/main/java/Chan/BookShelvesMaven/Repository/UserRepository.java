@@ -10,7 +10,9 @@ import Chan.BookShelvesMaven.Entity.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
 
-	public List<User> findByuserId(String userId);
+	User findByuserId(String userId);
+	
+//	public List<User> findByuserId(String userId);
 
 	public List<User> findByuserNm(String name); 
 	
