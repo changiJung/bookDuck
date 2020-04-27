@@ -1,0 +1,81 @@
+
+
+
+<div th:fragment="templateLogin">
+
+<script >
+	$(document).ready(function() {
+
+
+
+		$("#user-form").submit(function (event)
+		{
+
+			event.preventDefault();
+
+ 			var $form = $(this),
+ 				params = $form.serialize(),
+ 				url = $form.attr('action');
+
+
+		   $.ajax({
+	        type: 'POST',
+	        url: url,
+	        dataType: 'json',
+	        data: params,
+
+	        success: function (data, textStatus, xhr) {
+
+
+				localStorage.setItem("Authorization","Bearer " + data.token);
+
+				changeLogin();
+
+	        },
+	        error: function (xhr, error_text, statusText) {
+
+	        	alert('계정이 존재하지 않거나 비밀번호가 일치하지 않습니다.');
+	        	
+
+	        }
+	    });
+
+
+		})
+
+// Dont' Touch
+	});
+
+
+
+</script>
+
+
+	<section id="about">
+		<div class="container">
+		
+		<div id ="Context"></div>
+
+			<div class="row">
+				<div class="col-lg-8 mx-auto">
+
+
+					<form  th:action="@{/authenticate}" class="form-horizontal" id="user-form" th:object="${jwtRequest}" method="post">
+					<div class="form-group form-group-lg bg-light">
+						<label class="col-sm-2 control-label">책제목</label>
+						<div class="col-sm-10"> 
+							아이디<input type="text" class="form-control80" th:field="*{userId}" id="userId" th:value="aaaa" />
+							비밀번호<input type="text" class="form-control80" th:field="*{userPw}" id="userPw" th:value="aaaa" />
+
+							<button id="bth-search" 
+								class="btn btn-primary btn-lg" >로그인</button>
+						</div>
+					</div>
+				</form>
+
+				</div>
+			</div>
+		</div>
+	</section>
+
+</div>

@@ -14,31 +14,30 @@
 <div th:replace="include/header :: templateJs">
 </div>
 
-<!-- 네이버 API로그인  -->
-<script type="text/javascript"
-	src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js"
-	charset="utf-8"></script>
+
 </head>
 
 <script>
-	$(document).ready(function() {
-
-	});
 
 	function searchBooks(targetPage) {
-
-
-
+		
+		if(targetPage > 100) {
+			alert("검색결과는 1000건까지만 제공하고 있습니다.");
+			return false;
+		}
 
 		const searchBooks = {};
 		searchBooks["keyword"] = $("#keyword").val();
+		searchBooks["type"] = $("#type").val();
+		
 		if(targetPage == undefined) {
 		searchBooks["start"] = 1;
+		targetPage = 1;
 		} else {
 		searchBooks["start"] = targetPage;
 		}
 
-		console.log(searchBooks);
+		// console.log(searchBooks);
 
 		$.ajax({
 			type : "GET",
@@ -84,7 +83,7 @@
 							<td>저자 : ${item.author}</td>
 						</tr>
 						<tr>
-							<td>출판사 : ${item.author}</td>
+							<td>출판사 : ${item.publisher}</td>
 						</tr>						
 						<tr>
 							<td>${item.description}</td>
@@ -99,7 +98,7 @@
 
 					const params = { 
 						divId : "searchPaging", 
-						pageIndex : data.start, 
+						pageIndex : targetPage, 
 						totalCount : data.total, 
 						eventName : "searchBooks" 
 					}; 
@@ -139,15 +138,11 @@
 	<div th:replace="include/header :: templateHeader">
 	</div>
 
-	<header class="bg-primary text-white">
-		<div class="container text-center">
-			<h1>북덕방에 오신것을 환영합니다</h1>
-			<p class="lead">책 관련 서평 및 서재를 공유할 수 있는 공간입니다</p>		
-	</header>
+	<div th:replace="include/header :: templateIntro">
+	</div>
 
 
-
-
+	<div id="content">
 
 
 	<section id="about">
@@ -159,29 +154,26 @@
 
 
 					<!-- <form class="form-horizontal" id="search-form"> -->
-					<div class="form-group form-group-lg bg-light">
-						<label class="col-sm-2 control-label">책제목</label>
-						<div class="col-sm-10">
-							<input type="text" class="form-control80" id="keyword" />
+					<div class="form-group form-group-lg bg-light" style="padding-top: 5px; padding-right: 5px;padding-bottom: 30px; padding-left: 5px;">
+						<label class="col-sm-2 control-label">&nbsp;<b>검색조건</b></label>
+						<div class="col-sm-12">
+									<label class="select"> 
+							<select class= 'selectMain' name='type' id='type'>전체
+								<option value="query">전체</option>
+								<option value="d_titl">제목</option>
+								<option value="d_auth">저자</option>
+								<option value="d_publ">출판사</option>
+								<option value="d_cont">설명</option>
+								<option value="d_isbn">ISBN</option>
+
+								
+							</select>
+									</label>
+							<input type="text" class="form-search-control w70" id="keyword" />
 							<button id="bth-search"
 								class="btn btn-primary btn-lg" th:onclick="searchBooks()">검색</button>
 						</div>
 					</div>
-
-<!-- 					<div class="form-group">
-						<div class="col-sm-offset-2 col-sm-10">
-							<button id="bth-search"
-								class="btn btn-primary btn-lg" th:onclick="searchBooks()">검색</button>
-						</div>
-					</div>
- -->					<!-- </form> -->
-
-
-			<div id="naver_id_login">
-				
-			</div>
-
-
 
 				</div>
 			</div>
@@ -199,27 +191,12 @@
 		</div>
 	</section>
 
+	</div>
+
 	<div th:replace="include/footer :: templateFooter"/>
 
 
 </body>
-
-	<!-- 네이버 스크립트는 div naver_id_login 보다 먼저 선언되면 안된다  -->
-	<script>
-
-		var naver_id_login = new naver_id_login("LoJcFZie9GJNYfPWG7fD",
-		"http://222.237.83.123:11000/loginSucess.do");
-		var state = naver_id_login.getUniqState();
-		naver_id_login.setButton("white", 2, 40);
-		naver_id_login.setDomain("http://222.237.83.123:11000/");
-		naver_id_login.setState(state);
-		naver_id_login.setPopup();
-		naver_id_login.init_naver_id_login();
-
-	</script>
-
-
-
 
 
 </html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="kr">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+</head>
+<div th:replace="include/header :: templateJs">
+</div>
+
+
+<title>북덕방 로그인</title>
+
+<script >
+	$(document).ready(function() {
+
+		$("#user-form").submit(function (event)
+		{
+
+			event.preventDefault();
+
+ 			var $form = $(this),
+ 				data = $form.serialize(),
+ 				url = $form.attr('action');
+
+
+
+			var posting = $.post(url, data, function(response)
+        	{
+        		console.log(response);
+
+				var token = response.token;  
+				var myHeaders = new Headers(); // Currently empty
+				myHeaders.append("Authorization","Bearer " + token);
+				console.log(myHeaders);
+				localStorage.setItem("Authorization","Bearer " + token);
+
+				ajaxTest();
+
+				// alert("so what");
+				// var xhttp = new XMLHttpRequest();
+				//   xhttp.open("GET", "/test/te");
+				//   xhttp.setRequestHeader('Authorization',localStorage.getItem("Authorization")
+				//   xhttp.onreadystatechange = function() {
+				//     if (xhttp.readyState == 4 && xhttp.status == 200) {
+
+				//       document.getElementById("Context").innerHTML = xhttp.responseText;
+				//     }
+				//   };
+				//   xhttp.send();
+
+				// var xmlHttpRequest = customXMLHttpRequestFirst('get','/test/te',true);
+				// xmlHttpRequest.send();
+				// console.log(xmlHttpRequest);
+
+				// console.log(localStorage);
+
+
+					// $.ajaxSetup({
+					//   headers: {
+					//     'Authorization': window.localStorage.getItem("Authorization")
+					//   }
+					// });
+
+
+				// location.href="/test/te";
+				// fetch("/test/te", {
+				// 	"headers":myHeaders,
+				//   	method: "GET",
+  				
+				// });
+					// fetch('/test/te',{
+					//     "headers":myHeaders
+					// }).then(function(res){
+					//     // 서버의 응답이 json인 경우 아래의 코드를 통해서 js의 객체로 변환된 결과를 얻을 수 있습니다. 
+					//     return res.json();
+					// }).then(function(data){
+					//     // json으로 변환된 결과를 출력합니다. 
+					//     console.log(data);
+					// });
+				// localStorage.setItem("Authorization","Bearer " + token);
+
+	            /* Put the results in a div */
+    	        // var content = $(response).find('#summary');
+        	    // $('#result').empty().append(content);
+        	});
+
+
+		})
+
+
+	});
+
+
+
+
+	// function searchUser() {
+ // 		// e.preventDefault();
+
+	// 	const user = {};
+	// 	// user["userId"] = $("#userId").val();
+	// 	// user["userPw"] = $("#userPw").val();
+
+	// 	user["userId"] = "aaaa";
+	// 	user["userPw"] = "aaaa";
+		
+	// 	console.log(user);
+		
+	// 	preventDefault();
+
+	// 	alert("시1작");
+	// 	$.ajax({
+	// 		type : "POST",
+	// 		async: false, //true 비동기화 false 동기화
+	// 		contentType : "application/json", 
+	// 		url : "/authenticatePC",
+	// 		data:  JSON.stringify(user),
+	// 		dataType : 'json',
+	// 		// cache : false,
+	// 		// timeout : 600000,
+
+	// 		success : function(data) {
+
+	// 			var token = data.token;  
+	// 			localStorage.setItem("token",token);
+
+
+
+
+
+
+	// 		},
+	// 		error : function(e) {
+
+	// 			// var json = "<h4>Ajax Response</h4>&lt;pre&gt;"
+	// 			//     + e.responseText + "&lt;/pre&gt;";
+	// 			// $('#feedback').html(json);
+
+	// 			console.log("ERROR : ", e);
+	// 			// $("#btn-search").prop("disabled", false);
+
+	// 		}
+	// 	});
+
+	// }
+</script>
+
+
+<body>
+
+	<div th:replace="include/header :: templateHeader">
+	</div>
+
+	<header class="bg-primary text-white">
+		<div class="container text-center">
+			<h1>북덕방에 오신것을 환영합니다</h1>
+			<p class="lead">책 관련 서평 및 서재를 공유할 수 있는 공간입니다</p>		
+	</header>
+
+
+
+
+
+	<section id="about">
+		<div class="container">
+		
+		<div id ="Context"></div>
+
+			<div class="row">
+				<div class="col-lg-8 mx-auto">
+
+<!--  th:onclick="searchUser()"  -->
+					<form  th:action="@{/authenticatePC}" class="form-horizontal" id="user-form" th:object="${jwtRequest}" method="post">
+					<div class="form-group form-group-lg bg-light">
+						<label class="col-sm-2 control-label">책제목</label>
+						<div class="col-sm-10"> 
+							아이디<input type="text" class="form-control80" th:field="*{userId}" id="userId" th:value="aaaa" />
+							비밀번호<input type="text" class="form-control80" th:field="*{userPw}" id="userPw" th:value="aaaa" />
+
+							<button id="bth-search" 
+								class="btn btn-primary btn-lg" >로그인</button>
+						</div>
+					</div>
+
+<!-- 					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10">
+							<button id="bth-search"
+								class="btn btn-primary btn-lg" th:onclick="searchBooks()">검색</button>
+						</div>
+					</div>
+ -->					</form>
+
+
+
+
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section id="services" class="bg-light">
+		<div class="container">
+			<div class="col-lg-8 mx-auto">
+				<div id="searchResult">
+				</div>
+				<div id="searchPaging" style="text-align: center;">
+				</div>
+			</div>
+		</div>
+	</section>
+
+
+
+<div th:replace="include/footer :: templateFooter">
+</div>
+
+</body>
+
+</html>

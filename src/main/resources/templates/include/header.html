@@ -22,7 +22,79 @@
 	<link href="css/bookduck.css" rel="stylesheet">
 	<script src="js/bookduck.js"></script>
 	
+	<script>
 
+	$(document).ready(function() {
+	
+				if(localStorage.getItem("Authorization") != null) {
+
+					$.ajaxSetup({
+					  headers: {
+					    'Authorization': window.localStorage.getItem("Authorization")
+					  }
+					});
+				
+				}
+
+	})
+
+
+
+
+	 function ajaxMove(path){
+
+	 	console.log("여기");
+
+	      $.ajax({
+	        type : "GET",
+	        url : path,
+	        dataType : "text",
+	        error : function() {
+	          alert('통신실패!!');
+	        },
+	        success : function(data) {
+
+	        	$('#content').html(data);
+
+	        }
+	 
+	      });
+	    
+	    }
+
+	function changeLogin(){
+
+			
+		if(localStorage.getItem("Authorization") != null) {
+			var change1 = `
+			<li id='loginProcess' class="nav-item"><a class="nav-link js-scroll-trigger"
+				href='#' onclick="ajaxMove('loginOut');">로그아웃</a></li>						
+
+			`
+			;
+
+			$("#loginProcess").html(change1);
+
+		} else {
+
+			var change2 = `
+			<li id='loginProcess' class="nav-item"><a class="nav-link js-scroll-trigger"
+						href='#' onclick="ajaxMove('loginSucess');">로그인</a></li>						
+			`
+			;
+
+			$("#loginProcess").html(change2);
+
+		}
+
+		
+	}
+
+
+
+
+
+	</script>
 	
 
 </div>
@@ -37,7 +109,7 @@
 		id="mainNav">
 		<div class="container">
 
-			<a class="navbar-brand js-scroll-trigger" href="#page-top">북덕방</a>
+			<a class="navbar-brand js-scroll-trigger" href="/">북덕방</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#navbarResponsive" aria-controls="navbarResponsive"
 				aria-expanded="false" aria-label="Toggle navigation">
@@ -50,13 +122,22 @@
 					<li class="nav-item"><a class="nav-link js-scroll-trigger"
 						href="#services">북서재</a></li>
 					<li class="nav-item"><a class="nav-link js-scroll-trigger"
-						href="#contact">연락처</a></li>
-					<li class="nav-item"><a class="nav-link js-scroll-trigger"
 						th:href="@{/join}">회원가입</a></li>
-					<li class="nav-item"><a class="nav-link js-scroll-trigger"
-						th:href="@{/login}">로그인</a></li>						
+					<li id='loginProcess' class="nav-item"><a class="nav-link js-scroll-trigger"
+						href='#' onclick="ajaxMove('loginSucess');">로그인</a></li>						
+			
 				</ul>
 			</div>
 		</div>
 	</nav>
+</div>
+
+
+<div th:fragment="templateIntro">
+	<header class="bg-primary text-white">
+		<div class="container text-center">
+			<h1>북덕방에 오신것을 환영합니다</h1>
+			<p class="lead">책 관련 서평 및 서재를 공유할 수 있는 공간입니다</p>		
+	</header>
+
 </div>

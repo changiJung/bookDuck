@@ -24,6 +24,10 @@ public class QUser extends EntityPathBase<User> {
 
     public final DateTimePath<java.time.LocalDateTime> createDt = createDateTime("createDt", java.time.LocalDateTime.class);
 
+    public final StringPath password = createString("password");
+
+    public final ListPath<String, StringPath> roles = this.<String, StringPath>createList("roles", String.class, StringPath.class, PathInits.DIRECT2);
+
     public final DateTimePath<java.time.LocalDateTime> updateDt = createDateTime("updateDt", java.time.LocalDateTime.class);
 
     public final StringPath userAuth = createString("userAuth");
@@ -35,8 +39,6 @@ public class QUser extends EntityPathBase<User> {
     public final StringPath userMail = createString("userMail");
 
     public final StringPath userNm = createString("userNm");
-
-    public final StringPath userPw = createString("userPw");
 
     public QUser(String variable) {
         super(User.class, forVariable(variable));

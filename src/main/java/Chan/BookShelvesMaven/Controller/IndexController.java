@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import Chan.BookShelvesMaven.DAO.JwtRequest;
 import Chan.BookShelvesMaven.DAO.SearchBooks;
 import Chan.BookShelvesMaven.Entity.User;
 import Chan.BookShelvesMaven.Repository.UserRepository;
@@ -38,7 +39,7 @@ public class IndexController {
 		User user = new User();
 
 		mv.addObject("user", user);
-		mv.setViewName("join");
+		mv.setViewName("/body/mainJoin");
 		
 		return mv;
 	}		
@@ -48,9 +49,9 @@ public class IndexController {
 		
 		
 		ModelAndView mv = new ModelAndView();
-		User user = new User();
+		JwtRequest jwtRequest = new JwtRequest();
 
-		mv.addObject("user", user);
+		mv.addObject("jwtRequest", jwtRequest);
 		mv.setViewName("login");
 		
 		return mv;
@@ -67,12 +68,26 @@ public class IndexController {
 		mv.addObject("user", user);
 		mv.setViewName("login");
 
-		userRepository.findByuserId(user.getUserId());
+		userRepository.findByuserId(user.getUsername());
 		
 		return mv;
 	}	
 
 	
+	@GetMapping("/loginSucess")
+	private ModelAndView LoginSucessMember() {
+		
+		
+		ModelAndView mv = new ModelAndView();
+		JwtRequest jwtRequest = new JwtRequest();
+
+		mv.addObject("jwtRequest", jwtRequest);
+		mv.setViewName("/body/mainLogin");
+		
+		return mv;
+	}	
+
+
 	
 	
 }

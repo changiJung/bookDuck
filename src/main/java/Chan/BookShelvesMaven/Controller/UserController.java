@@ -52,21 +52,6 @@ public class UserController {
 	}
 	
 	
-	//post 임시  JPA
-	@Transactional
-	@PostMapping
-	public String postUser(User user) {
-				
-		BookShelves shelves1 = new BookShelves();
-		user.setUserPw(bcryptEncoder.encode(user.getUserPw()));
-		shelves1.setUserId(user.getUserId());
-		
-		userRepository.save(user);
-		bookShelvesRepository.save(shelves1);
-    								
-		return "hey post";
-	}
-
 	//다이나믹 쿼리
 	@RequestMapping(value= "/search", method = RequestMethod.GET)
 	public List<User> searchUser( @RequestParam(name = "userId", required = false) String userId,

@@ -32,10 +32,18 @@ public class SearchController {
 
 //		AjaxResponseBody result = new AjaxResponseBody();
 		
-        String clientId = ""; //애플리케이션 클라이언트 아이디값"
-        String clientSecret = ""; //애플리케이션 클라이언트 시크릿값"
+        String clientId = "LoJcFZie9GJNYfPWG7fD"; //애플리케이션 클라이언트 아이디값"
+        String clientSecret = "0BLKpCrrgO"; //애플리케이션 클라이언트 시크릿값"
 
+        
+        System.out.println(searchBooks.toString());
+        System.out.println(searchBooks.getStart());
 
+        Long searchCnt = searchBooks.getStart();
+        if(searchCnt > 1) {
+        	searchCnt = searchCnt * 10;
+        }
+        
         
         String conver = ""; 
         
@@ -46,10 +54,21 @@ public class SearchController {
 			System.out.println("utf-8 convert Error");
 			e1.printStackTrace();
 		}
-
-        String query = "?query=" + conver + "&start=1&disaply=10";
+        String query = "";
+        String apiURL = "";
         
-        String apiURL = "https://openapi.naver.com/v1/search/book.json" + query;
+		if(searchBooks.getType().equals("query")){
+			query = "?query=" + conver + "&start=" + searchCnt + "&disaply=10";
+			apiURL = "https://openapi.naver.com/v1/search/book.json" + query;
+		} else {
+			query = searchBooks.getType() + "=" + conver + "&start=" + searchCnt + "&disaply=10";
+			apiURL = "https://openapi.naver.com/v1/search/book_adv?" + query;
+		}
+
+		System.out.println(query);
+		
+        
+        
 
         Map<String, String> requestHeaders = new HashMap<>();
         requestHeaders.put("X-Naver-Client-Id", clientId);

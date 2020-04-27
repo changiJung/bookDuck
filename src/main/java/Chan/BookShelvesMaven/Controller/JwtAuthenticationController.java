@@ -1,6 +1,10 @@
 package Chan.BookShelvesMaven.Controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -9,6 +13,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,7 +23,6 @@ import Chan.BookShelvesMaven.Config.Security.JwtTokenUtil;
 import Chan.BookShelvesMaven.Config.Security.JwtUserDetailsService;
 import Chan.BookShelvesMaven.DAO.JwtRequest;
 import Chan.BookShelvesMaven.DAO.JwtResponse;
-import Chan.BookShelvesMaven.Entity.User;
 
 
 
@@ -38,26 +42,53 @@ public class JwtAuthenticationController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;	
 	
+	//인터넷에서 template
+//	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
+//	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
+//		
+//		authenticate(authenticationRequest.getUserId(), authenticationRequest.getUserPw());
+//
+//		final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUserId());
+//		
+//		final String token = jwtTokenUtil.generateToken(userDetails);
+//
+//		System.out.println(token);
+//
+//		
+//		
+//		 
+//		
+//		 HttpHeaders headers = new HttpHeaders();
+//	       headers.add("Authorization", token);
+//		
+//		return ResponseEntity.ok(token);
+////		return ResponseEntity.ok(new JwtResponse(token));
+//	}
+
+
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
-	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
+	public ResponseEntity<?>  createAuthenticationTokenPC(@ModelAttribute JwtRequest jwtRequest, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
-		authenticate(authenticationRequest.getUserId(), authenticationRequest.getUserPw());
+		authenticate(jwtRequest.getUserId(), jwtRequest.getUserPw());
 
-		final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUserId());
+		final UserDetails userDetails = userDetailsService.loadUserByUsername(jwtRequest.getUserId());
 		
-		final String token = jwtTokenUtil.generateToken(userDetails);
+		final String Authorization = jwtTokenUtil.generateToken(userDetails);
 
-		return ResponseEntity.ok(new JwtResponse(token));
+		return ResponseEntity.ok(new JwtResponse(Authorization));
 	}
 
+
+
+	
 	
 	private void authenticate(String username, String password) throws Exception {
 		try {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 		} catch (DisabledException e) {
-			throw new Exception("USER_DISABLED", e);
+			throw new Exception("사용하실 수 없는 아이디 입니다.", e);
 		} catch (BadCredentialsException e) {
-			throw new Exception("INVALID_CREDENTIALS", e);
+			throw new Exception("아이디 및 비밀번호가 유효하지 않습니다.", e);
 		}
 	}
 	

@@ -18,43 +18,33 @@
 <script >
 	$(document).ready(function() {
 
+		$("#user-form").submit(function (event)
+		{
+
+			event.preventDefault();
+
+ 			var $form = $(this),
+ 				data = $form.serialize(),
+ 				url = $form.attr('action');
+
+			var posting = $.post(url, data, function(response)
+        	{        		
+					var token = response.token;  
+					var myHeaders = new Headers(); // Currently empty
+					myHeaders.append("Authorization","Bearer " + token);
+					console.log(myHeaders);
+					localStorage.setItem("Authorization","Bearer " + token);
+		
+        	});
+
+
+		})
+
+
 	});
 
-	function searchUser() {
-
-		const user = {};
-		user["username"] = $("#userId").val();
-		user["password"] = $("#userPw").val();
-
-		$.ajax({
-			type : "POST",
-			contentType : "application/json",
-			url : "/authenticate",
-			data: JSON.stringify(user),
-			dataType : 'json',
-			cache : false,
-			timeout : 600000,
-
-			success : function(data) {
-
-				console.log(data);
 
 
-
-			},
-			error : function(e) {
-
-				// var json = "<h4>Ajax Response</h4>&lt;pre&gt;"
-				//     + e.responseText + "&lt;/pre&gt;";
-				// $('#feedback').html(json);
-
-				console.log("ERROR : ", e);
-				// $("#btn-search").prop("disabled", false);
-
-			}
-		});
-
-	}
 </script>
 
 
@@ -70,26 +60,27 @@
 	</header>
 
 
-
+	<div id = "Context">
 
 
 	<section id="about">
 		<div class="container">
 		
+		<div id ="Context"></div>
 
 			<div class="row">
 				<div class="col-lg-8 mx-auto">
 
-
-					<form  class="form-horizontal" id="user-form" th:object="${user}">
+<!--  th:onclick="searchUser()"  -->
+					<form  th:action="@{/authenticate}" class="form-horizontal" id="user-form" th:object="${jwtRequest}" method="post">
 					<div class="form-group form-group-lg bg-light">
 						<label class="col-sm-2 control-label">책제목</label>
 						<div class="col-sm-10"> 
-							아이디<input type="text" class="form-control80" th:field="*{userId}" id="userId" />
-							비밀번호<input type="text" class="form-control80" th:field="*{userPw}" id="userPw" />
+							아이디<input type="text" class="form-control80" th:field="*{userId}" id="userId" th:value="aaaa" />
+							비밀번호<input type="text" class="form-control80" th:field="*{userPw}" id="userPw" th:value="aaaa" />
 
-							<button id="bth-search" th:onclick="searchUser()"
-								class="btn btn-primary btn-lg" >등록</button>
+							<button id="bth-search" 
+								class="btn btn-primary btn-lg" >로그인</button>
 						</div>
 					</div>
 
@@ -121,6 +112,7 @@
 	</section>
 
 
+	</div>
 
 <div th:replace="include/footer :: templateFooter">
 </div>

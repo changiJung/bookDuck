@@ -18,9 +18,6 @@ public class JwtUserDetailsService implements UserDetailsService {
 	@Autowired
 	private UserRepository userRepository;
 		
-	@Autowired
-	private PasswordEncoder bcryptEncoder;
-
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
@@ -28,7 +25,7 @@ public class JwtUserDetailsService implements UserDetailsService {
 		if (user == null) {
 			throw new UsernameNotFoundException("User not found with username: " + username);
 		}
-		return new org.springframework.security.core.userdetails.User(user.getUserNm(), user.getUserPw(),
+		return new org.springframework.security.core.userdetails.User(user.getUserId(), user.getPassword(),
 				new ArrayList<>());
 	}
 	

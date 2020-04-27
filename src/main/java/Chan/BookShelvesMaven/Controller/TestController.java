@@ -68,26 +68,12 @@ public class TestController {
 				.orderBy(qCommunity.articleId.desc()).offset(offset).limit(limit).fetch();
 	}
 
-	@RequestMapping("/list")
-	public List<User> list() throws Exception {
-		String userId = "asdfgb";
-		String userPw = "1asdf";
-		String userNm = "홍길동";
-		String userGrp = "user";
-		String userMail = "abcd@kor";
-		String userAuth = "Grp";
-		User userA = new User();
-		userA.setUserAuth(userAuth);
-		userA.setUserGrp(userGrp);
-		userA.setUserId(userId);
-		userA.setUserMail(userMail);
-		userA.setUserNm(userNm);
-		userA.setUserPw(userPw);
-
-		List<User> userList = userRepositorySupport.findByName("홍길동");
-		System.out.println(userList.size());
-
-		return userRepositorySupport.findAll();
+	
+	
+	@RequestMapping("/te")
+	private String testPage() {
+		
+		return "test";
 	}
 
 }
