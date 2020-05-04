@@ -31,6 +31,17 @@ public class UserRepositorySupport extends QuerydslRepositorySupport {
 		return userList;
 	}
 
+	
+	public List<User> findById(String id) {
+		QUser quser = new QUser("user");
+
+		List<User> userList = queryFactory.selectFrom(quser).
+											where(quser.userId.eq(id)).fetch();
+		return userList;
+	}
+
+	
+	
 	public List<User> findAll() {
 		QUser quser = new QUser("user");
 

@@ -17,117 +17,6 @@
 
 </head>
 
-<script>
-
-	function searchBooks(targetPage) {
-		
-		if(targetPage > 100) {
-			alert("검색결과는 1000건까지만 제공하고 있습니다.");
-			return false;
-		}
-
-		const searchBooks = {};
-		searchBooks["keyword"] = $("#keyword").val();
-		searchBooks["type"] = $("#type").val();
-		
-		if(targetPage == undefined) {
-		searchBooks["start"] = 1;
-		targetPage = 1;
-		} else {
-		searchBooks["start"] = targetPage;
-		}
-
-		// console.log(searchBooks);
-
-		$.ajax({
-			type : "GET",
-			contentType : "application/json",
-			url : "/search/book",
-			data: searchBooks,
-			dataType : 'json',
-			cache : false,
-			timeout : 600000,
-
-			success : function(data) {
-
-				var line = '';
-
-				console.log("SUCCESS : ", data);
-
-				if(data.total === 0) {
-
-					line = `
-					<h4 class="center">요청하신 검색어로는 검색결과가 존재하지 않습니다</h4>
-					`
-					const pageResult = ``;
-					$('#searchPaging').html(pageResult);
-
-				} else {
-
-
-					// 	line += `
-					// <table  style="width:100%; border: 0px solid black">
-					// 	`;
-					
-
-
-					$(data.items).each(function (index, item){
-
-						line += `
-						<table  style="width:100%; border: 0px solid black; margin-bottom : 5px;">
-						<tr>
-							<td rowspan=4 style="width :15%; "><img src="${item.image}"/></td>
-							<td style="width :85%">${item.title}</td>
-						</tr>
-						<tr>
-							<td>저자 : ${item.author}</td>
-						</tr>
-						<tr>
-							<td>출판사 : ${item.publisher}</td>
-						</tr>						
-						<tr>
-							<td>${item.description}</td>
-						</tr>						
-						</table>
-						`;
-
-
-					});
-
-					// console.log(data);
-
-					const params = { 
-						divId : "searchPaging", 
-						pageIndex : targetPage, 
-						totalCount : data.total, 
-						eventName : "searchBooks" 
-					}; 
-
-					gfn_renderPaging(params);
-
-				}
-
-
-
-
-				$('#searchResult').html(line);
-
-
-			},
-			error : function(e) {
-
-				// var json = "<h4>Ajax Response</h4>&lt;pre&gt;"
-				//     + e.responseText + "&lt;/pre&gt;";
-				// $('#feedback').html(json);
-
-				console.log("ERROR : ", e);
-				// $("#btn-search").prop("disabled", false);
-
-			}
-		});
-
-	}
-</script>
 
 
 
@@ -145,53 +34,10 @@
 	<div id="content">
 
 
-	<section id="about">
-		<div class="container">
-		
-
-			<div class="row">
-				<div class="col-lg-8 mx-auto">
-
-
-					<!-- <form class="form-horizontal" id="search-form"> -->
-					<div class="form-group form-group-lg bg-light" style="padding-top: 5px; padding-right: 5px;padding-bottom: 30px; padding-left: 5px;">
-						<label class="col-sm-2 control-label">&nbsp;<b>검색조건</b></label>
-						<div class="col-sm-12">
-									<label class="select"> 
-							<select class= 'selectMain' name='type' id='type'>전체
-								<option value="query">전체</option>
-								<option value="d_titl">제목</option>
-								<option value="d_auth">저자</option>
-								<option value="d_publ">출판사</option>
-								<option value="d_cont">설명</option>
-								<option value="d_isbn">ISBN</option>
-
-								
-							</select>
-									</label>
-							<input type="text" class="form-search-control w70" id="keyword" />
-							<button id="bth-search"
-								class="btn btn-primary btn-lg" th:onclick="searchBooks()">검색</button>
-						</div>
-					</div>
-
-				</div>
-			</div>
-		</div>
-	</section>
-
-	<section id="services" class="bg-light">
-		<div class="container">
-			<div class="col-lg-8 mx-auto">
-				<div id="searchResult">
-				</div>
-				<div id="searchPaging" style="text-align: center;">
-				</div>
-			</div>
-		</div>
-	</section>
+	<div th:replace="body/mainSearch :: mainSearch"/>
 
 	</div>
+
 
 	<div th:replace="include/footer :: templateFooter"/>
 

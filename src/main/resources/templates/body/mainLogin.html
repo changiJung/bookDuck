@@ -11,6 +11,13 @@
 		$("#user-form").submit(function (event)
 		{
 
+
+			if($("#userId").val() == '' || $("#userPw").val()  == '' ) {
+				alert("아이디 및 비밀번호를 입력해 주세요.");
+				return false;
+			}
+
+
 			event.preventDefault();
 
  			var $form = $(this),
@@ -27,7 +34,7 @@
 	        success: function (data, textStatus, xhr) {
 
 
-				localStorage.setItem("Authorization","Bearer " + data.token);
+				localStorage.setItem("Authorization!","Bearer " + data.token);
 
 				changeLogin();
 
@@ -54,7 +61,7 @@
 	<section id="about">
 		<div class="container">
 		
-		<div id ="Context"></div>
+
 
 			<div class="row">
 				<div class="col-lg-8 mx-auto">
@@ -62,20 +69,34 @@
 
 					<form  th:action="@{/authenticate}" class="form-horizontal" id="user-form" th:object="${jwtRequest}" method="post">
 					<div class="form-group form-group-lg bg-light">
-						<label class="col-sm-2 control-label">책제목</label>
-						<div class="col-sm-10"> 
-							아이디<input type="text" class="form-control80" th:field="*{userId}" id="userId" th:value="aaaa" />
-							비밀번호<input type="text" class="form-control80" th:field="*{userPw}" id="userPw" th:value="aaaa" />
+						<label class="col-sm-2 control-label"></label>
+						<div class="col-sm-12"> 
+							아이디<input type="text" class="form-control w80" th:field="*{userId}" id="userId"  />
+							비밀번호<input type="password" class="form-control w80" th:field="*{userPw}" id="userPw"  />
 
 							<button id="bth-search" 
 								class="btn btn-primary btn-lg" >로그인</button>
 						</div>
 					</div>
 				</form>
+							<button id="bth-join" value="button" 
+								class="btn btn-primary btn-lg" onclick="ajaxMove('join');" >회원가입</button>								
 
 				</div>
 			</div>
 		</div>
 	</section>
+
+	<section id="services" class="bg-light">
+		<div class="container">
+			<div class="col-lg-8 mx-auto">
+				<div id="searchResult">
+				</div>
+				<div id="searchPaging" style="text-align: center;">
+				</div>
+			</div>
+		</div>
+	</section>
+
 
 </div>

@@ -42,30 +42,6 @@ public class JwtAuthenticationController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;	
 	
-	//인터넷에서 template
-//	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
-//	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
-//		
-//		authenticate(authenticationRequest.getUserId(), authenticationRequest.getUserPw());
-//
-//		final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUserId());
-//		
-//		final String token = jwtTokenUtil.generateToken(userDetails);
-//
-//		System.out.println(token);
-//
-//		
-//		
-//		 
-//		
-//		 HttpHeaders headers = new HttpHeaders();
-//	       headers.add("Authorization", token);
-//		
-//		return ResponseEntity.ok(token);
-////		return ResponseEntity.ok(new JwtResponse(token));
-//	}
-
-
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
 	public ResponseEntity<?>  createAuthenticationTokenPC(@ModelAttribute JwtRequest jwtRequest, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
@@ -74,13 +50,11 @@ public class JwtAuthenticationController {
 		final UserDetails userDetails = userDetailsService.loadUserByUsername(jwtRequest.getUserId());
 		
 		final String Authorization = jwtTokenUtil.generateToken(userDetails);
+		response.setHeader("Authorization", Authorization);
 
+				
 		return ResponseEntity.ok(new JwtResponse(Authorization));
 	}
-
-
-
-	
 	
 	private void authenticate(String username, String password) throws Exception {
 		try {

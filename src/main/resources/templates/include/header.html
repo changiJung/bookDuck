@@ -26,7 +26,9 @@
 
 	$(document).ready(function() {
 	
-				if(localStorage.getItem("Authorization") != null) {
+				if(localStorage.getItem("Authorization!") != null) {
+
+					changeLogin();
 
 					$.ajaxSetup({
 					  headers: {
@@ -43,7 +45,6 @@
 
 	 function ajaxMove(path){
 
-	 	console.log("여기");
 
 	      $.ajax({
 	        type : "GET",
@@ -66,10 +67,10 @@
 
 			
 		if(localStorage.getItem("Authorization") != null) {
-			var change1 = `
+			var change1 = 
+			`
 			<li id='loginProcess' class="nav-item"><a class="nav-link js-scroll-trigger"
-				href='#' onclick="ajaxMove('loginOut');">로그아웃</a></li>						
-
+				href='#' onclick="loginOut();">로그아웃</a></li>
 			`
 			;
 
@@ -77,9 +78,10 @@
 
 		} else {
 
-			var change2 = `
+			var change2 = 
+			`
 			<li id='loginProcess' class="nav-item"><a class="nav-link js-scroll-trigger"
-						href='#' onclick="ajaxMove('loginSucess');">로그인</a></li>						
+						href='#' onclick="ajaxMove('login');">로그인</a></li>						
 			`
 			;
 
@@ -91,7 +93,12 @@
 	}
 
 
+	function loginOut() {
 
+		localStorage.removeItem("Authorization")
+		changeLogin();
+
+	}
 
 
 	</script>
@@ -109,7 +116,7 @@
 		id="mainNav">
 		<div class="container">
 
-			<a class="navbar-brand js-scroll-trigger" href="/">북덕방</a>
+			<a class="navbar-brand js-scroll-trigger" href="#" onclick="ajaxMove('/main');">북덕방</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse"
 				data-target="#navbarResponsive" aria-controls="navbarResponsive"
 				aria-expanded="false" aria-label="Toggle navigation">
@@ -118,13 +125,11 @@
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto">
 					<li class="nav-item"><a class="nav-link js-scroll-trigger"
-						href="#about">북덕방이란</a></li>
-					<li class="nav-item"><a class="nav-link js-scroll-trigger"
-						href="#services">북서재</a></li>
-					<li class="nav-item"><a class="nav-link js-scroll-trigger"
-						th:href="@{/join}">회원가입</a></li>
+						href="#" onclick="ajaxMove('/introduce');">북덕방이란</a></li>
+					<li class="nav-item"><a class="nav-link js -scroll-trigger"
+						href="#">북서재</a></li>
 					<li id='loginProcess' class="nav-item"><a class="nav-link js-scroll-trigger"
-						href='#' onclick="ajaxMove('loginSucess');">로그인</a></li>						
+						href='#' onclick="ajaxMove('login');">로그인</a></li>						
 			
 				</ul>
 			</div>

@@ -32,9 +32,11 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws ServletException, IOException {
 
+		if (response.getHeader("Authorization") != null){
+			request.setAttribute("Authorization", response.getHeader("Authorization"));
+		}
+		
 		String requestTokenHeader = jwtTokenUtil.resolveToken(request);
-//		System.out.println("requestHeader : " + requestTokenHeader);
-
 		
 		MutableHttpServletRequest mutableRequest = new MutableHttpServletRequest(request);
 
@@ -42,8 +44,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		String jwtToken = null;
 		// JWT Token is in the form "Bearer token". Remove Bearer word and get
 		// only the Token		        
-		if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
-			logger.warn("로그인 사용자 있음1");
+		if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {			
 			jwtToken = requestTokenHeader.substring(7);
 			mutableRequest.putHeader("Authorization", request.getHeader("Authorization"));
 			try {
@@ -74,7 +75,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 				// that the current user is authenticated. So it passes the
 				// Spring Security Configurations successfully.
 				SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-		        
+				response.setHeader("Authorization", jwtToken);
 				
 			}
 		}

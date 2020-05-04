@@ -47,7 +47,7 @@ public class User implements UserDetails {
 	}
 
 	@Id
-	@Column(name = "USER_ID")	
+	@Column(name = "USER_ID")
 	private String userId;
 	@Column(name = "USER_PW")
 	private String password;
@@ -118,6 +118,74 @@ public class User implements UserDetails {
 	public String getPassword() {
 		// TODO Auto-generated method stub
 		return password;
+	}
+
+	public String getUserNm() {
+		return userNm;
+	}
+
+	public void setUserNm(String userNm) {
+		this.userNm = userNm;
+	}
+
+	public String getUserGrp() {
+		return userGrp;
+	}
+
+	public void setUserGrp(String userGrp) {
+		this.userGrp = userGrp;
+	}
+
+	public String getUserMail() {
+		return userMail;
+	}
+
+	public void setUserMail(String userMail) {
+		this.userMail = userMail;
+	}
+
+	public String getUserAuth() {
+		return userAuth;
+	}
+
+	public void setUserAuth(String userAuth) {
+		this.userAuth = userAuth;
+	}
+
+	public LocalDateTime getCreateDt() {
+		return createDt;
+	}
+
+	public void setCreateDt(LocalDateTime createDt) {
+		this.createDt = createDt;
+	}
+
+	public LocalDateTime getUpdateDt() {
+		return updateDt;
+	}
+
+	public void setUpdateDt(LocalDateTime updateDt) {
+		this.updateDt = updateDt;
+	}
+
+	public List<BookShelves> getBookShelves() {
+		return bookShelves;
+	}
+
+	public void setBookShelves(List<BookShelves> bookShelves) {
+		this.bookShelves = bookShelves;
+	}
+
+	public List<String> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<String> roles) {
+		this.roles = roles;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
 

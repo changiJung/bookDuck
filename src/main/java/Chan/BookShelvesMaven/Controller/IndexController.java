@@ -24,7 +24,7 @@ public class IndexController {
 		SearchBooks searchBooks = new SearchBooks();
 		
 		ModelAndView mv = new ModelAndView();
-//		
+
 		mv.addObject("searchBooks", searchBooks);
 		mv.setViewName("main");
 		
@@ -33,8 +33,7 @@ public class IndexController {
 
 	@GetMapping("/join")
 	private ModelAndView JoinMember() {
-		
-		
+				
 		ModelAndView mv = new ModelAndView();
 		User user = new User();
 
@@ -52,7 +51,7 @@ public class IndexController {
 		JwtRequest jwtRequest = new JwtRequest();
 
 		mv.addObject("jwtRequest", jwtRequest);
-		mv.setViewName("login");
+		mv.setViewName("/body/mainLogin");
 		
 		return mv;
 	}	
@@ -86,6 +85,34 @@ public class IndexController {
 		
 		return mv;
 	}	
+
+	@GetMapping("/main")
+	private ModelAndView MainFragment() {
+				
+		
+		ModelAndView mv = new ModelAndView();
+
+		// SearchBooks searchBooks = new SearchBooks();
+		// mv.addObject("searchBooks", searchBooks);
+		mv.setViewName("/body/mainSearch");
+		
+		return mv;
+	}	
+
+
+	@GetMapping("/introduce")
+	private ModelAndView MainIntroduceFragment() {
+				
+		
+		ModelAndView mv = new ModelAndView();
+
+		// SearchBooks searchBooks = new SearchBooks();
+		// mv.addObject("searchBooks", searchBooks);
+		mv.setViewName("/body/mainIntroduce");
+		
+		return mv;
+	}	
+
 
 
 	

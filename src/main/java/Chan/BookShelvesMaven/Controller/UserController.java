@@ -5,7 +5,10 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -14,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import Chan.BookShelvesMaven.Entity.BookShelves;
+import Chan.BookShelvesMaven.DAO.JwtRequest;
 import Chan.BookShelvesMaven.Entity.User;
 import Chan.BookShelvesMaven.Repository.BookShelvesRepository;
 import Chan.BookShelvesMaven.Repository.UserRepository;
@@ -73,5 +76,21 @@ public class UserController {
 		userRepositorySupport.ModifyUser(userId, userNm);
 		
 	}
+
+	@PostMapping()
+	@Transactional
+	public User RegisterUser(@ModelAttribute User user) {
+		
+		
+		User nuser = new User();
+		nuser.setUserId(user.getUserId());
+		nuser.setUserNm(user.getUserNm());
+		nuser.setUserMail(user.getUserMail());
+		nuser.setPassword(bcryptEncoder.encode(user.getPassword()));
+		userRepository.save(nuser);
+		
+		
+		 return nuser;
+	}	
 	
 }

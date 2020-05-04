@@ -8,15 +8,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-//@Controller
-public class CustomErrorController {
+@Controller
+public class CustomErrorController implements ErrorController {
 
- // implements ErrorController
+ // 
 	private String VIEW_PATH = "/error/";
 
-//	@RequestMapping(value = "/error")
+	@RequestMapping(value = "/error")
 	public String handleError(HttpServletRequest request) {
-		System.out.println("ERRRORR!!!!");
+//		System.out.println("ERRRORR!!!!");
 		Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
 		if (status != null) {
 			int statusCode = Integer.valueOf(status.toString());
@@ -31,8 +31,8 @@ public class CustomErrorController {
 		return "error";
 	}
 
-//	@Override
-//	public String getErrorPath() {
-//		return "/error";
-//	}
+	@Override
+	public String getErrorPath() {
+		return "/error";
+	}
 }
