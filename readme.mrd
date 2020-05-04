@@ -1,0 +1,13 @@
+개인 프로젝트 책검색 사이트 구현한 것입니다
+
+restfull 하게 최대한 해보려고 이것저것? 시도해봤습니다
+
+Security 단은 JWT-TOKEN 을 사용했으며
+
+Web 단은 thymeleaf 으로 시도해봤으며
+
+API는 네이버 책 검색 서비스를 사용했습니다
+
+mobile 은 react-native 로 구현할 예정입니다
+
+By. 05.04
