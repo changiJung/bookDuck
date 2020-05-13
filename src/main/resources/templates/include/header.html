@@ -26,7 +26,9 @@
 
 	$(document).ready(function() {
 	
-				if(localStorage.getItem("Authorization!") != null) {
+				if(localStorage.getItem("Authorization") != null) {
+
+
 
 					changeLogin();
 
@@ -125,9 +127,11 @@
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto">
 					<li class="nav-item"><a class="nav-link js-scroll-trigger"
+						href="/" >북덕방이란2</a></li>					
+					<li class="nav-item"><a class="nav-link js-scroll-trigger"
 						href="#" onclick="ajaxMove('/introduce');">북덕방이란</a></li>
 					<li class="nav-item"><a class="nav-link js -scroll-trigger"
-						href="#">북서재</a></li>
+						href="#" onclick="ajaxMove('/shelves');">북서재</a></li>
 					<li id='loginProcess' class="nav-item"><a class="nav-link js-scroll-trigger"
 						href='#' onclick="ajaxMove('login');">로그인</a></li>						
 			

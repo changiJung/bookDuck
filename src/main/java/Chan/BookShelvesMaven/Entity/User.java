@@ -13,7 +13,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -30,14 +30,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 
-@Builder // builder를 사용할수 있게 합니다.
-@Entity // jpa entity임을 알립니다.
-@Getter // user 필드값의 getter를 자동으로 생성합니다.
-@NoArgsConstructor // 인자없는 생성자를 자동으로 생성합니다.
+@Builder 			// builder를 사용할수 있게 합니다.
+@Entity 			// jpa entity임을 알립니다.
+@Getter 			// user 필드값의 getter를 자동으로 생성합니다.
+@NoArgsConstructor  // 인자없는 생성자를 자동으로 생성합니다.
 @AllArgsConstructor // 인자를 모두 갖춘 생성자를 자동으로 생성합니다.
 @Table(name = "USER")
 public class User implements UserDetails {
 
+	
+	
 	public String getUserId() {
 		return userId;
 	}
@@ -62,6 +64,15 @@ public class User implements UserDetails {
 	private String userAuth;
 	
 	
+	
+	
+//    private User(String username, List<GrantedAuthority> authorities) {
+//        this.userNm = username;
+//        this.userAuth = "user";
+//    }
+	
+	
+	
 	@CreationTimestamp
 	@Column(name = "create_dt", nullable = false, updatable = false)
 	private LocalDateTime createDt;
@@ -71,9 +82,9 @@ public class User implements UserDetails {
 	private LocalDateTime updateDt;
 
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL ) 
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL ) 
 	@JoinColumn(name="USER_Id")
-	private List<BookShelves> bookShelves = new ArrayList<>();	
+	private BookShelves bookShelves; 	
 	
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
@@ -168,14 +179,6 @@ public class User implements UserDetails {
 		this.updateDt = updateDt;
 	}
 
-	public List<BookShelves> getBookShelves() {
-		return bookShelves;
-	}
-
-	public void setBookShelves(List<BookShelves> bookShelves) {
-		this.bookShelves = bookShelves;
-	}
-
 	public List<String> getRoles() {
 		return roles;
 	}
@@ -186,6 +189,14 @@ public class User implements UserDetails {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public BookShelves getBookShelves() {
+		return bookShelves;
+	}
+
+	public void setBookShelves(BookShelves bookShelves) {
+		this.bookShelves = bookShelves;
 	}
 	
 

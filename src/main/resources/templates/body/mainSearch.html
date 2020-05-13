@@ -6,7 +6,6 @@
 
 	$("#keyword").keyup(function(e){
 		if(e.keyCode == 13)  
-			console.log("------");
 			searchBooks();			
 	});
 
@@ -20,10 +19,6 @@
 			return false;
 		}
 
-		// if($("#keyword").val().length > 1) {
-		// 	alert('검색어를 한글자 이상 입력해 주세요');
-		// 	return false;
-		// }
 
 		const searchBooks = {};
 		searchBooks["keyword"] = $("#keyword").val();
@@ -36,7 +31,6 @@
 		searchBooks["start"] = targetPage;
 		}
 
-		console.log(searchBooks);
 
 		$.ajax({
 			type : "GET",
@@ -49,7 +43,7 @@
 
 			success : function(data) {
 
-				var line = '';
+				let line = '';
 
 				// console.log("SUCCESS : ", data);
 
@@ -75,7 +69,7 @@
 						line += `
 						<table  style="width:100%; border: 0px solid black; margin-bottom : 5px;">
 						<tr>
-							<td rowspan=4 style="width :15%; "><img src="${item.image}"/></td>
+							<td rowspan=5 style="width :15%; "><img src="${item.image}"/></td>
 							<td style="width :85%">${item.title}</td>
 						</tr>
 						<tr>
@@ -86,6 +80,21 @@
 						</tr>						
 						<tr>
 							<td>${item.description}</td>
+						</tr>
+						<tr>
+							
+
+							<td>
+							`;
+							if(localStorage.getItem("Authorization") != null) {
+								line += `
+									<input type="button" onclick="registerBooks('${item.title}', '${item.image}', '${item.author}', '${item.isbn}')" value="책추가"/>									
+								`;
+							} 
+							
+							line += `
+
+							</td>
 						</tr>						
 						</table>
 						`;
@@ -107,7 +116,6 @@
 				}
 
 
-				console.log(line);
 				$('#searchResult').html(line);
 
 
@@ -122,12 +130,61 @@
 			}
 		});
 
-	}
+	};
+
+
+	function  registerBooks(titleRaw, imageRaw, authorRaw, publicsherRaw, isbnRaw){
+
+
+
+
+		$("#titleRaw").val(titleRaw);
+		$("#imageRaw").val(imageRaw);
+		$("#authorRaw").val(authorRaw);
+		$("#isbnRaw").val(isbnRaw);
+		$("#publicsherRaw").val(publicsherRaw);
+
+	
+ 			var $form = $('#book-form'),
+ 				params = $form.serialize(),
+ 				url = $form.attr('action');
+
+		   $.ajax({
+	        type: 'POST',
+	        url: '/bookShelves/book',
+	        dataType: 'json',
+	        data:  params,
+
+	        success: function (data, textStatus, xhr) {
+				
+	        	console.log(data);
+	        	console.log(textStatus);
+	        	console.log(xhr);
+	
+	        },error: function (xhr, error_text, statusText) {
+
+	        }
+	 
+	      });
+
+	};
+
 </script>
 
 
 
 <div class="container">
+
+	<form th:action="@{/bookShelves/book}" class="form-horizontal" id="book-form" th:object="${book}"  method="post">
+							<input type="hidden"  th:field="*{title}" id="titleRaw" />
+							<input type="hidden"  th:field="*{image}" id="imageRaw" />
+							<input type="hidden"  th:field="*{author}" id="authorRaw" />
+							<input type="hidden"  th:field="*{isbn}" id="isbnRaw" />
+							<input type="hidden"  th:field="*{publisher}" id="publicsherRaw" />
+
+	</form>
+
+
 	<section id="about">
 		
 

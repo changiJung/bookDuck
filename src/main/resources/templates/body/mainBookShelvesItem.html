@@ -4,7 +4,7 @@
 
 
 
-		$("#user-form").submit(function (event)
+		$("#bookShelves").submit(function (event)
 		{
 
 			event.preventDefault();
@@ -29,6 +29,7 @@
 				if(data == 'fail'){
 					alert("이미 해당 아이디를 사용하는 사용자가 존재합니다.")
 				} else {
+					alert("!!!");
 					register();
 				}
 				
@@ -56,12 +57,12 @@
 // Dont' Touch
 	});
 
-	function register(){
+	function bookRegister(){
 
-
+			alert("등록");
 			// event.preventDefault();
 
- 			var $form = $('#user-form'),
+ 			var $form = $('#bookShelves'),
  				params = $form.serialize(),
  				url = $form.attr('action');
 
@@ -118,17 +119,14 @@
 			<div class="row">
 				<div class="col-lg-8 mx-auto">
 
-					<form th:action="@{/user}" class="form-horizontal" id="user-form" th:object="${user}"  method="post">
+					<form th:action="@{/user}" class="form-horizontal" id="bookShelves" th:object="${bookShelves}"  method="post">
 					<div class="form-group form-group-lg bg-light">
 						<label class="col-sm-2 control-label"></label>
 						<div class="col-sm-12"> 
-							아이디<input type="text" class="form-control w40" th:field="*{userId}" id="userId" />
-							비밀번호<input type="password" class="form-control w40" th:field="*{password}" id="userPw" />
-							사용자성명<input type="text" class="form-control w40" th:field="*{userNm}" id="userNm" />
-							유저메일<input type="text" class="form-control w40" th:field="*{userMail}" id="userMail" />
-							<input type="hidden" class="form-control w40" th:field="*{userAuth}" id="userAuth" />
+							서재명<input type="text" class="form-control w40" th:field="*{bookShelvesNm}" id="bookShelvesNm" />
+							공개여부<input type="text" class="form-control w40" th:field="*{opnYn}" id="opnYn" />
 							<button id="bth-search" value="submit"
-								class="btn btn-primary btn-lg" >회원가입</button>
+								class="btn btn-primary btn-lg" >추가</button>
 						</div>
 					</div>
 					</form>

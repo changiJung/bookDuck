@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import Chan.BookShelvesMaven.DAO.JwtRequest;
+import Chan.BookShelvesMaven.Entity.BookShelves;
 import Chan.BookShelvesMaven.Entity.User;
 import Chan.BookShelvesMaven.Repository.BookShelvesRepository;
 import Chan.BookShelvesMaven.Repository.UserRepository;
@@ -48,8 +49,7 @@ public class UserController {
 
 	@Transactional
 	@RequestMapping(value= "/{userId}", method = RequestMethod.DELETE)
-	public String DeleteUser(@PathVariable String userId) {		
-		System.out.println(userId);		
+	public String DeleteUser(@PathVariable String userId) {				
 		userRepositorySupport.deleteUser(userId);		
 		return "post";
 	}
@@ -80,17 +80,20 @@ public class UserController {
 	@PostMapping()
 	@Transactional
 	public User RegisterUser(@ModelAttribute User user) {
-		
-		
+				
 		User nuser = new User();
 		nuser.setUserId(user.getUserId());
 		nuser.setUserNm(user.getUserNm());
 		nuser.setUserMail(user.getUserMail());
 		nuser.setPassword(bcryptEncoder.encode(user.getPassword()));
+
+		BookShelves books = new BookShelves();
+		books.setUserId(user.getUserId());
+						
 		userRepository.save(nuser);
+		bookShelvesRepository.save(books);
 		
-		
-		 return nuser;
+		return nuser;
 	}	
 	
 }

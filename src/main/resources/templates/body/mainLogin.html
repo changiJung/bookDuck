@@ -1,6 +1,3 @@
-
-
-
 <div th:fragment="templateLogin">
 
 <script >
@@ -34,7 +31,13 @@
 	        success: function (data, textStatus, xhr) {
 
 
-				localStorage.setItem("Authorization!","Bearer " + data.token);
+				localStorage.setItem("Authorization",data.token);
+
+				$.ajaxSetup({
+					  headers: {
+					    'Authorization': window.localStorage.getItem("Authorization")
+					  }
+					});
 
 				changeLogin();
 

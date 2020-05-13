@@ -1,0 +1,93 @@
+
+
+<div th:fragment="mainShelves">
+
+<script>
+
+
+	$(document).ready(function() {
+
+
+
+		$("#bookShelves").submit(function (event)
+		{
+
+
+		})
+
+// Dont' Touch
+	});
+
+
+
+
+
+</script>
+
+
+
+<div class="container">
+	<section id="about">
+		
+
+			<div class="row">
+				<div class="col-lg-8 mx-auto">
+
+
+					<!-- <form class="form-horizontal" id="search-form"> -->
+					<div class="form-group form-group-lg bg-light" style="padding-top: 5px; padding-right: 5px;padding-bottom: 30px; padding-left: 5px;">
+						<label class="col-sm-12 control-label" style="text-align: center;">&nbsp;<b>나의 서재의 책 목록</b></label>
+						<div class="col-sm-12">
+
+							<table>
+								
+
+
+							<div th:each="book : ${books}">
+
+								<input type="hidden" value=${book.isbn}/>
+								<td rowspan=4 style="width :30%; "><img th:src="${book.image}"/><td style="width :70%" th:text="${book.title}"></td>
+								<tr>
+								<td style="width :70%" th:text="${book.author}"></td>
+								</tr>
+								<tr>
+								<td style="width :70%" th:text=${book.publisher}></td>
+								</tr>
+								<tr>
+								<td style="width :70%" th:text="${book.totPage}"></td>
+								</tr>
+								
+							</div>
+							</table>
+
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</section>
+
+
+
+	<section id="services" class="bg-light">
+		<div class="container">
+			<div class="col-lg-8 mx-auto">
+			<!-- <form th:action="@{/bookShelves}" class="form-horizontal" id="bookShelves" th:object="${bookShelves}"  method="post"> -->
+					<div class="form-group form-group-lg bg-light">
+						<label class="col-sm-2 control-label"></label>
+						<div class="col-sm-12"> 
+								
+						</div>
+					</div>
+					<!-- </form> -->
+	
+			</div>
+		</div>
+	</section>
+
+</div>
+
+	
+
+
+</div>

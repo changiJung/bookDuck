@@ -1,5 +1,7 @@
 package Chan.BookShelvesMaven.Repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
 
@@ -8,6 +10,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import Chan.BookShelvesMaven.Entity.BookShelves;
 import Chan.BookShelvesMaven.Entity.QBookShelves;
 import Chan.BookShelvesMaven.Entity.QUser;
+import Chan.BookShelvesMaven.Entity.User;
 
 @Repository
 public class BookShelvesRepositorySupport extends QuerydslRepositorySupport {
@@ -21,17 +24,25 @@ public class BookShelvesRepositorySupport extends QuerydslRepositorySupport {
 	}
 
 	
-	public String test() {
+	public List<BookShelves> findById(String userId) {
 		
-
-		QBookShelves bookShelves = QBookShelves.bookShelves;
+		System.out.println("=========================");
+		System.out.println(userId);
+		System.out.println("=========================");
 		
+		QBookShelves qbookShelves = new QBookShelves("bookshelves");
 		
-
-		
-		return null;
+		return queryFactory.selectFrom(qbookShelves).where(qbookShelves.userId.eq(userId)).fetch();
 	}
 	
+	
+//	public List<User> findByName(String name) {
+//		QUser quser = new QUser("user");
+//
+//		List<User> userList = queryFactory.selectFrom(quser).
+//											where(quser.userNm.eq(name)).fetch();
+//		return userList;
+//	}	
 	
 	
 //	public UserRepositorySupport(JPAQueryFactory queryFactory) {

@@ -10,7 +10,7 @@ var gfv_eventName = null;
 
 function gfn_renderPaging(params){ 
 
-	console.log(params);
+
 
 	var divId = params.divId; //페이징이 그려질 div id 
 
@@ -21,7 +21,6 @@ function gfn_renderPaging(params){
 	var currentIndex =  params.pageIndex;
 	//$("#"+params.pageIndex).val(); //현재 위치 
 
-	console.log(currentIndex);
 
 	if(params.pageIndex.length == 0 || gfn_isNull(currentIndex) == true){ 
 		currentIndex = 1; 

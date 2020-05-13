@@ -24,8 +24,6 @@ public class QBookShelves extends EntityPathBase<BookShelves> {
 
     public final DateTimePath<java.time.LocalDateTime> createDt = createDateTime("createDt", java.time.LocalDateTime.class);
 
-    public final StringPath opnYn = createString("opnYn");
-
     public final NumberPath<Long> ShelvesNo = createNumber("ShelvesNo", Long.class);
 
     public final DateTimePath<java.time.LocalDateTime> updateDt = createDateTime("updateDt", java.time.LocalDateTime.class);

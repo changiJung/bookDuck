@@ -31,9 +31,9 @@
         	{        		
 					var token = response.token;  
 					var myHeaders = new Headers(); // Currently empty
-					myHeaders.append("Authorization","Bearer " + token);
+					myHeaders.append("Authorization",token);
 					console.log(myHeaders);
-					localStorage.setItem("Authorization","Bearer " + token);
+					localStorage.setItem("Authorization",token);
 		
         	});
 

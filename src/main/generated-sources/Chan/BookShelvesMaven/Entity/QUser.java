@@ -18,9 +18,11 @@ public class QUser extends EntityPathBase<User> {
 
     private static final long serialVersionUID = 601434288L;
 
+    private static final PathInits INITS = PathInits.DIRECT2;
+
     public static final QUser user = new QUser("user");
 
-    public final ListPath<BookShelves, QBookShelves> bookShelves = this.<BookShelves, QBookShelves>createList("bookShelves", BookShelves.class, QBookShelves.class, PathInits.DIRECT2);
+    public final QBookShelves bookShelves;
 
     public final DateTimePath<java.time.LocalDateTime> createDt = createDateTime("createDt", java.time.LocalDateTime.class);
 
@@ -41,15 +43,24 @@ public class QUser extends EntityPathBase<User> {
     public final StringPath userNm = createString("userNm");
 
     public QUser(String variable) {
-        super(User.class, forVariable(variable));
+        this(User.class, forVariable(variable), INITS);
     }
 
     public QUser(Path<? extends User> path) {
-        super(path.getType(), path.getMetadata());
+        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
     public QUser(PathMetadata metadata) {
-        super(User.class, metadata);
+        this(metadata, PathInits.getFor(metadata, INITS));
+    }
+
+    public QUser(PathMetadata metadata, PathInits inits) {
+        this(User.class, metadata, inits);
+    }
+
+    public QUser(Class<? extends User> type, PathMetadata metadata, PathInits inits) {
+        super(type, metadata, inits);
+        this.bookShelves = inits.isInitialized("bookShelves") ? new QBookShelves(forProperty("bookShelves")) : null;
     }
 
 }

@@ -23,6 +23,7 @@ import Chan.BookShelvesMaven.Config.Security.JwtTokenUtil;
 import Chan.BookShelvesMaven.Config.Security.JwtUserDetailsService;
 import Chan.BookShelvesMaven.DAO.JwtRequest;
 import Chan.BookShelvesMaven.DAO.JwtResponse;
+import Chan.BookShelvesMaven.Entity.User;
 
 
 
@@ -47,9 +48,9 @@ public class JwtAuthenticationController {
 		
 		authenticate(jwtRequest.getUserId(), jwtRequest.getUserPw());
 
-		final UserDetails userDetails = userDetailsService.loadUserByUsername(jwtRequest.getUserId());
+		final User user = userDetailsService.loadUserByUsername(jwtRequest.getUserId());
 		
-		final String Authorization = jwtTokenUtil.generateToken(userDetails);
+		final String Authorization = jwtTokenUtil.generateToken(user);
 		response.setHeader("Authorization", Authorization);
 
 				
