@@ -88,7 +88,7 @@
 							`;
 							if(localStorage.getItem("Authorization") != null) {
 								line += `
-									<input type="button" onclick="registerBooks('${item.title}', '${item.image}', '${item.author}', '${item.isbn}')" value="책추가"/>									
+									<input type="button" onclick="registerBooks('${item.title}', '${item.image}', '${item.author}', '${item.publisher}', '${item.isbn}')" value="책추가"/>									
 								`;
 							} 
 							
@@ -144,28 +144,50 @@
 		$("#isbnRaw").val(isbnRaw);
 		$("#publicsherRaw").val(publicsherRaw);
 
-	
  			var $form = $('#book-form'),
  				params = $form.serialize(),
  				url = $form.attr('action');
 
-		   $.ajax({
-	        type: 'POST',
-	        url: '/bookShelves/book',
-	        dataType: 'json',
-	        data:  params,
+var request = $.ajax({
+  type: "POST",
+  url: url,
+  data: params,
+  timeout: 2000,
+});
 
-	        success: function (data, textStatus, xhr) {
+request.done(function( msg ) {
+  alert("성공적으로 서재에 책을 추가하였습니다");
+  
+});
+
+request.fail(function( jqXHR, textStatus ) {
+  // alert("ㄹ먀ㅣㄷ");
+});
+
+request.always(function() {
+  // alert("항상");
+});
+
+
+
+
+		  //  $.ajax({
+	   //      type: 'POST',
+	   //      url: '/bookShelves/book',
+	   //      dataType: 'json',
+	   //      data:  params,
+
+	   //      success: function (data, textStatus, xhr) {
 				
-	        	console.log(data);
-	        	console.log(textStatus);
-	        	console.log(xhr);
+	   //      	console.log(data);
+	   //      	console.log(textStatus);
+	   //      	console.log(xhr);
 	
-	        },error: function (xhr, error_text, statusText) {
+	   //      },error: function (xhr, error_text, statusText) {
 
-	        }
+	   //      }
 	 
-	      });
+	   //    });
 
 	};
 

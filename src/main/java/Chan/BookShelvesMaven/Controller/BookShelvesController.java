@@ -22,7 +22,7 @@ import Chan.BookShelvesMaven.Repository.BookShelvesRepository;
 
 @RestController
 @RequestMapping("/bookShelves/book")
-public class BooksShelvesController {
+public class BookShelvesController {
 
 	@Resource
 	private BookShelvesRepository bookShelvesRepository;
