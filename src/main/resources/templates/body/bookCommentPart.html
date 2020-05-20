@@ -1,0 +1,162 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+
+
+
+<script>
+
+	modalClose = () => {
+		alert("뭐야");
+		this.close()
+
+	}
+
+</script>
+
+<!-- <meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>책 감상문을 적어주세요</title>
+
+<div th:replace="include/header :: templateJs">
+</div>
+
+
+<script>
+	$(document).ready(function() {
+
+		$("#bookShelves").submit(function (event)
+		{
+
+			event.preventDefault();
+
+			if($("#userId").val() == '' || $("#userPw").val()  == '' ) {
+				alert("아이디 및 비밀번호를 입력해 주세요.");
+				return false;
+			}
+
+			const userId = $("#userId").val();
+
+			
+			event.preventDefault();
+
+ 	      	$.ajax({
+		        type : "GET",
+		        url : "/ajax/userIdChk?userId=" + userId,
+		        dataType: 'text',
+				success: function (data, textStatus, xhr) {
+
+					
+					if(data == 'fail'){
+						alert("이미 해당 아이디를 사용하는 사용자가 존재합니다.")
+					} else {
+						registerBookComment();
+					}
+									
+
+		        },
+		        error: function (xhr, error_text, statusText) {
+
+		        	alert("통신이 실패했습니다. 관리자에게 문의해주세요.");
+		        	
+
+		        }
+	 
+	      	});
+
+
+
+
+
+
+
+		})
+
+	// Dont' Touch
+	});
+
+</script> -->
+
+
+<div style="margin-bottom: 50px;">
+
+
+
+<hr/>
+<hr/>
+<hr/>
+<hr/>
+
+
+<h4>바뀌는거냐</h4>
+
+
+<th:if="${bookComment} == 'null'">
+
+	<!-- <div class="modal"> -->
+
+		
+		<h4>없어</h4>
+		
+		
+		<h3>책에 대한 감상평을 남겨주세요</h3>
+		<p><label>감상:</label><input type="textarea" id="comment" ></p>
+		<p><input type="submit" value="저장"> <input type="button" value="닫기112" onclick="modalClose();" rel="modal:close" /></p>
+		<a href="#" rel="modal:close">Close</a>	
+		
+		<a href="#" rel="modal:close" class="close-modal" onclick="modalClose();">Close</a>
+		<h4>있어</h4>
+	<!-- </div> -->
+</th:if>
+<th:unless="${bookComment} == 'null'">
+
+
+<div th:each="bookCommentOne : ${bookComment}">
+
+
+	<h3>책에 대한 감상평을 남겨주세요</h3>
+	<!-- <input type="hidden" value="${book.isbn}"/>
+	<td rowspan=4 style="width :20%; text-align: center;"><img th:src="${book.image}" /><td style="width :80%" th:text="${book.title}"></td>
+	<tr>
+	<td style="width :80%" th:text="${book.author}"></td>
+	</tr>
+	<tr>
+	<td style="width :80%" th:text=${book.publisher}></td>
+	</tr>
+	<tr>
+	<td style="width :80%">
+		<b>독서 진행상황</b>&nbsp;&nbsp;<input type="text" onkeypress="onlyNumber();" class="w20" style="text-align: right" th:value=${book.curPage}>									
+		/<span name="totPageCnt">[[${book.totPage}]]</span> 
+		<a class="btn manual-ajax" th:href="|/bookComment?isbn=${book.isbn}" rel="modal:open" th:data-cnt="|${book.isbn}|">Open Modal</a>
+		
+		<!-- ?isbn=@{book.isbn} -->
+		<!-- th:href="@{/product/list}" -->
+		<!-- /bookShelves/bookComment -->
+		<!-- <button th:onclick="test()" th:data-cnt="|${book.isbn}|">ddd</button> -->
+		<!-- th:onclick="'test1('+${book.isbn}+')'" -->
+
+	</td>
+		<!-- <td style="width :40%" th:text="${book.totPage}" ></td> -->
+	
+	</tr> -->
+	
+</div>
+
+</th:unless>
+
+<!-- <form action="/bookShelves/bookcomment" id="bookComment"  th:object="${bookComment} "class="col-lg-4 mx-auto" style="display: none; height: 40%; ">
+  <h3>책에 대한 감상평을 남겨주세요</h3>
+  <p><label>Username:</label><input type="textarea" th:field="*{comment}" id="comment" ></p>
+  <p><input type="submit" value="저장"> <input type="button" value="닫기" onclick="modalClose();" /></p>
+</form> -->
+
+
+
+
+
+
+
+</div>

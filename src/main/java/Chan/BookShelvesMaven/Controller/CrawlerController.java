@@ -69,7 +69,8 @@ public class CrawlerController {
 			}
 		
 //		while (ie1.hasNext()) {
-//			
+
+			//			
 //			ie1.
 //			
 //			if(ie1.next().text().startsWith("원제") || ie1.next().text().startsWith("저자") ) {

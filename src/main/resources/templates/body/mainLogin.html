@@ -32,14 +32,8 @@
 
 
 				localStorage.setItem("Authorization",data.token);
-
-				$.ajaxSetup({
-					  headers: {
-					    'Authorization': window.localStorage.getItem("Authorization")
-					  }
-					});
-
 				changeLogin();
+
 
 	        },
 	        error: function (xhr, error_text, statusText) {

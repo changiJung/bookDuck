@@ -58,9 +58,18 @@ public class BookShelvesController {
 	}
 
 	@PutMapping
-	public String updateBookShelves() {
+	public Book updateBookShelves(@ModelAttribute Book book, @AuthenticationPrincipal User user) {
 
-		return null;
+		Book nbook = new Book();
+		
+		nbook = bookRepository.findByIsbn(book.getIsbn());
+		nbook.setCurPage(book.getCurPage());
+		nbook.setBookShelevesId(user.getBookShelves().getShelvesNo());
+		
+		
+		bookRepository.save(nbook);
+				
+		return nbook;
 	}
 
 	@DeleteMapping

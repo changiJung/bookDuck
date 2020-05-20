@@ -4,17 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import Chan.BookShelvesMaven.DAO.JwtRequest;
 import Chan.BookShelvesMaven.DAO.SearchBooks;
 import Chan.BookShelvesMaven.Entity.Book;
-import Chan.BookShelvesMaven.Entity.BookShelves;
+import Chan.BookShelvesMaven.Entity.BookComment;
 import Chan.BookShelvesMaven.Entity.User;
+import Chan.BookShelvesMaven.Repository.BookCommentRepositorySupport;
 import Chan.BookShelvesMaven.Repository.BookRepository;
 import Chan.BookShelvesMaven.Repository.BookShelvesRepository;
 import Chan.BookShelvesMaven.Repository.BookShelvesRepositorySupport;
@@ -36,6 +39,10 @@ public class IndexController {
 
 	@Autowired
 	private BookRepository bookRepository;
+	
+	@Autowired
+	private BookCommentRepositorySupport bookCommentRepositorySupport;
+	
 		
 	@GetMapping("/")
 	private ModelAndView Main() {
@@ -110,8 +117,7 @@ public class IndexController {
 
 	@GetMapping("/main")
 	private ModelAndView MainFragment() {
-				
-		
+						
 		ModelAndView mv = new ModelAndView();
 
 		SearchBooks searchBooks = new SearchBooks();
@@ -148,11 +154,14 @@ public class IndexController {
 						
 		List<Book> books = new ArrayList<>();
 
+		BookComment bookComment = new BookComment();
+		
 		books = bookRepository.findBybookShelevesId(user.getBookShelves().getShelvesNo());
 
 		System.out.println(books.size());
 		
-		mv.addObject("books", books);		
+		mv.addObject("books", books);
+		mv.addObject("bookComment", bookComment);
 		mv.setViewName("/body/mainShelves");
 		
 		return mv;
@@ -161,5 +170,42 @@ public class IndexController {
 
 
 	
+	@GetMapping("/test")
+	private String test() {
+				
+		
+//		ModelAndView mv = new ModelAndView();
+//
+//		SearchBooks searchBooks = new SearchBooks();
+//		
+//		Book book = new Book();
+//
+//		mv.addObject("searchBooks", searchBooks);
+//		mv.addObject("book", book);
+//
+//		mv.setViewName("/body/mainSearch");
+		
+		return "test";
+	
+	}	
+
+
+
+	@GetMapping("/bookComment")
+	private ModelAndView BookComentFragment(@AuthenticationPrincipal User user, @RequestParam(name = "isbn") String isbn ) {
+
+		ModelAndView mv = new ModelAndView();
+		
+		
+		List<BookComment> bookComment = bookCommentRepositorySupport.findByBook(user.getUserId(), isbn);
+
+		
+
+		mv.addObject("bookComment", bookComment);
+		mv.setViewName("/body/bookCommentPart");
+		
+		return mv;
+
+	}
 	
 }

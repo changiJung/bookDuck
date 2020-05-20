@@ -29,7 +29,6 @@
 				if(data == 'fail'){
 					alert("이미 해당 아이디를 사용하는 사용자가 존재합니다.")
 				} else {
-					alert("!!!");
 					register();
 				}
 				
@@ -57,54 +56,6 @@
 // Dont' Touch
 	});
 
-	function bookRegister(){
-
-			alert("등록");
-			// event.preventDefault();
-
- 			var $form = $('#bookShelves'),
- 				params = $form.serialize(),
- 				url = $form.attr('action');
-
-
-		   $.ajax({
-	        type: 'POST',
-	        url: '/user',
-	        dataType: 'json',
-	        data: params,
-
-	        success: function (data, textStatus, xhr) {
-
-	        	console.log(data);
-	        	console.log(textStatus);
-	        	console.log(xhr);
-
-	        	alert('성공적으로 회원가입에 성공하셨습니다.')
-	
-				ajaxMove('login')
-
-	        },
-	        error: function (xhr, error_text, statusText) {
-
-
-	        	console.log(error_text);
-	        	console.log(statusText);
-	        	console.log(xhr);
-
-
-
-        		alert('성공적으로 회원가입에 성공하셨습니다.')
-	
-				ajaxMove('login')
-
-
-	        	alert("통신이 실패했습니다. 관리자에게 문의해주세요.");
-	        	
-
-	        }
-	    });
-
-	}
 
 
 

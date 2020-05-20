@@ -21,49 +21,27 @@
 	<!-- 북덕전용 관련 기능 -->
 	<link href="css/bookduck.css" rel="stylesheet">
 	<script src="js/bookduck.js"></script>
-	
+
+	<!-- <link href="css/jquery.modal.min.css" rel="stylesheet">
+	<script src="js/jquery.modal.min.js"></script> -->
+
 	<script>
 
 	$(document).ready(function() {
 	
 				if(localStorage.getItem("Authorization") != null) {
 
+					// alert("호출");
 
+
+					// alert("로그인성공");
 
 					changeLogin();
-
-					$.ajaxSetup({
-					  headers: {
-					    'Authorization': window.localStorage.getItem("Authorization")
-					  }
-					});
 				
 				}
 
 	})
 
-
-
-
-	 function ajaxMove(path){
-
-
-	      $.ajax({
-	        type : "GET",
-	        url : path,
-	        dataType : "text",
-	        error : function() {
-	          alert('통신실패!!');
-	        },
-	        success : function(data) {
-
-	        	$('#content').html(data);
-
-	        }
-	 
-	      });
-	    
-	    }
 
 	function changeLogin(){
 
@@ -77,6 +55,18 @@
 			;
 
 			$("#loginProcess").html(change1);
+
+
+					$.ajaxSetup({
+					  headers: {
+
+					    'Authorization': window.localStorage.getItem("Authorization")
+					  }
+					});
+
+
+
+			ajaxMove('/shelves');
 
 		} else {
 
@@ -97,10 +87,17 @@
 
 	function loginOut() {
 
-		localStorage.removeItem("Authorization")
+		localStorage.removeItem('Authorization')
+		sessionStorage.removeItem('Authorization')
+
 		changeLogin();
+		ajaxMove('/main');
 
 	}
+
+
+
+
 
 
 	</script>
@@ -126,8 +123,8 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto">
-					<li class="nav-item"><a class="nav-link js-scroll-trigger"
-						href="/" >북덕방이란2</a></li>					
+<!-- 					<li class="nav-item"><a class="nav-link js-scroll-trigger"
+						href="/test" >북덕방이란2</a></li>					 -->
 					<li class="nav-item"><a class="nav-link js-scroll-trigger"
 						href="#" onclick="ajaxMove('/introduce');">북덕방이란</a></li>
 					<li class="nav-item"><a class="nav-link js -scroll-trigger"

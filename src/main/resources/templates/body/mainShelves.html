@@ -2,21 +2,70 @@
 
 <div th:fragment="mainShelves">
 
-<script>
+<script th:inline="javascript">
 
 
 	$(document).ready(function() {
 
 
 
-		$("#bookShelves").submit(function (event)
-		{
+		
+		$('.pageChk').focusout(function(event) {
+
+			let isbn = this.childNodes[1].value;
+			let curPage = this.childNodes[5].value;
+			let totParet = this.childNodes[7];
+			let totPage = totParet.childNodes[0].data;
+
+			console.log(isbn);
+			console.log(curPage);
+			console.log(totPage);
+
+			if(curPage > totPage) {
+				console.log("페이지작성오류");
+				curPage = totPage;
+				this.childNodes[5].value = totPage;				
+			}
 
 
-		})
+			const book = { "isbn" : isbn, "curPage" : curPage }
 
-// Dont' Touch
+			// /bookShelves/book
+
+
+			const request = $.ajax({
+				type: "PUT",
+				url: '/bookShelves/book',
+				data: book,
+				timeout: 2000,
+			});
+
+			request.done(function (msg) {
+				
+			});
+
+			request.fail(function (jqXHR, textStatus) {
+			});
+
+			request.always(function () {
+			});
+
+
+
+			
+
+	  		
+		});
+
+
+
+
+
+
 	});
+
+	
+
 
 
 
@@ -27,35 +76,67 @@
 
 
 <div class="container">
-	<section id="about">
-		
 
+
+
+	<section id="about">
+	
 			<div class="row">
 				<div class="col-lg-8 mx-auto">
-
 
 					<!-- <form class="form-horizontal" id="search-form"> -->
 					<div class="form-group form-group-lg bg-light" style="padding-top: 5px; padding-right: 5px;padding-bottom: 30px; padding-left: 5px;">
 						<label class="col-sm-12 control-label" style="text-align: center;">&nbsp;<b>나의 서재의 책 목록</b></label>
 						<div class="col-sm-12">
 
-							<table>
+							<table th:inline="text">
 								
 
 
 							<div th:each="book : ${books}">
+								
+								<div style="margin-bottom: 20px;">
 
-								<input type="hidden" value=${book.isbn}/>
-								<td rowspan=4 style="width :30%; "><img th:src="${book.image}"/><td style="width :70%" th:text="${book.title}"></td>
-								<tr>
-								<td style="width :70%" th:text="${book.author}"></td>
-								</tr>
-								<tr>
-								<td style="width :70%" th:text=${book.publisher}></td>
-								</tr>
-								<tr>
-								<td style="width :70%" th:text="${book.totPage}"></td>
-								</tr>
+									<div class="testPages">
+
+										
+										<td rowspan=4 style="width :20%; text-align: center;"><img th:src="${book.image}" /><td style="width :80%" th:utext="${book.title}"></td>
+										<tr>
+											<td style="width :80%" th:text="${book.author}"></td>
+										</tr>
+										<tr>
+											<td style="width :80%" th:text=${book.publisher}></td>
+										</tr>
+										<tr>
+											<td style="width :80%">
+												<div class="pageChk">
+													<input class="hideIsbn" type="hidden" th:value="${book.isbn}"/>	
+													<b>독서 진행상황</b>&nbsp;&nbsp;<input type="text" onkeypress="onlyNumber();" class="w20 curPage" style="text-align: right" th:value=${book.curPage}>									
+													/<span class="totPageCnt" th:data-cnt="|${book.totPage}|">[[${book.totPage}]]</span> 
+													
+													<button type="button" th:onclick='openComment(value)' th:value="${#strings.trim(book.isbn)}">보기</button>
+												</div>
+												<!-- strings.trim(str) -->
+												<!-- <a class="btn manual-ajax" th:href="|/bookComment?isbn=${book.isbn}" rel="modal:open" th:data-cnt="|${book.isbn}|">Open Modal</a> -->
+												<!-- <button value="감상평 작성" th:onclick="|openComment()|"'>작성</button> -->
+												<!-- ${book.isbn} -->
+
+												<!-- ?isbn=@{book.isbn} -->
+												<!-- th:href="@{/product/list}" -->
+												<!-- /bookShelves/bookComment -->
+												<!-- <button th:onclick="test()" th:data-cnt="|${book.isbn}|">ddd</button> -->
+												<!-- th:onclick="'test1('+${book.isbn}+')'" -->
+												
+											</td>
+											<!-- <td style="width :40%" th:text="${book.totPage}" ></td> -->
+											
+										</tr>
+
+
+									</div>
+
+
+								</div>
 								
 							</div>
 							</table>
@@ -65,7 +146,10 @@
 
 				</div>
 			</div>
+
+
 		</section>
+
 
 
 
@@ -76,7 +160,11 @@
 					<div class="form-group form-group-lg bg-light">
 						<label class="col-sm-2 control-label"></label>
 						<div class="col-sm-12"> 
-								
+			
+							<div class="form-group form-group-lg bg-light" id="bookCommentW">
+
+							</div>
+							
 						</div>
 					</div>
 					<!-- </form> -->
@@ -85,9 +173,28 @@
 		</div>
 	</section>
 
+	<form action="/bookShelves/bookcomment" id="bookCommentForm"  th:object="${bookComment}" style="display: none;">
+		<input type="hidden" th:field="*{isbn}" id="isbn">
+		<input type="text" th:field="*{comment}" id="commentData" >
+	</form>
+
+
 </div>
 
-	
+
+
+
+
+
+
 
 
 </div>
+
+
+
+
+</div>
+
+
+
