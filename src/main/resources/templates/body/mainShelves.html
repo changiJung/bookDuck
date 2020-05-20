@@ -17,12 +17,11 @@
 			let totParet = this.childNodes[7];
 			let totPage = totParet.childNodes[0].data;
 
-			console.log(isbn);
-			console.log(curPage);
-			console.log(totPage);
-
-			if(curPage > totPage) {
-				console.log("페이지작성오류");
+			let num1 = Number(curPage);
+			let num2 = Number(totPage);
+			
+			if(num1 > num2) {
+				console.log("현재페이지가 max페이지 보다 크다");
 				curPage = totPage;
 				this.childNodes[5].value = totPage;				
 			}
