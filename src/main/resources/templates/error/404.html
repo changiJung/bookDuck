@@ -2,10 +2,12 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Test Error Page!</title>
+<title>존재하지 않는 페이지 입니다</title>
 <link rel="stylesheet" th:href="@{/css/style.css}"></link>
 </head>
 <body>
+	
+	<h4>해당페이지는 존재하지 않습니다</h4>
 	<div class="errorPage">
 		<span class="errorHead">Error!</span><br />
 		<p th:text="${'path: ' + path}"></p>

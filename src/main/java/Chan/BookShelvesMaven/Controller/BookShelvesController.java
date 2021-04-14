@@ -1,11 +1,14 @@
 package Chan.BookShelvesMaven.Controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,12 +18,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import Chan.BookShelvesMaven.Entity.Book;
-import Chan.BookShelvesMaven.Entity.BookShelves;
+import Chan.BookShelvesMaven.Entity.BookComment;
 import Chan.BookShelvesMaven.Entity.User;
 import Chan.BookShelvesMaven.Repository.BookRepository;
 import Chan.BookShelvesMaven.Repository.BookShelvesRepository;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/bookShelves/book")
 public class BookShelvesController {
 
@@ -52,7 +56,21 @@ public class BookShelvesController {
 	}
 
 	@GetMapping
-	public String getList() {
+	public String getBookShelves(@AuthenticationPrincipal User user) {
+		
+		List<Book> books = new ArrayList<>();
+
+		BookComment bookComment = new BookComment();
+		
+		books = bookRepository.findBybookShelevesId(user.getBookShelves().getShelvesNo());
+
+//		System.out.println(books.size());
+		
+//		mv.addObject("books", books);
+//		mv.addObject("bookComment", bookComment);
+//		mv.setViewName("/body/mainShelves");
+		
+//		return mv;
 
 		return null;
 	}

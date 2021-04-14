@@ -10,14 +10,17 @@ import org.jsoup.select.Elements;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
-
+@CrossOrigin
 @Repository
 public class CrawlerController {
 
 
 	public Long bookPageCraler(String isbn) {
 
+		
+		
 		System.out.println("-----------------");
 		System.out.println(isbn);
 	
