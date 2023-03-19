@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 public class CrawlerController {
 
 
+	//	현재 네이버 검색사이트 시스템 변동으로 인해서 사용불가
 	public Long bookPageCraler(String isbn) {
 
 		

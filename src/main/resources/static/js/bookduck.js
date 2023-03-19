@@ -292,35 +292,29 @@ const searchBooks = (targetPage) => {
 				$(data.items).each(function (index, item) {
 
 					line += `
-						<table  style="width:100%; border: 0px solid black; margin-bottom : 5px;">
+						<table  style="width:100%; border: 1px solid black; margin-bottom : 5px;">
 						<tr>
-							<td rowspan=5 style="width :15%; "><img src="${item.image}"/></td>
-							<td style="width :85%">${item.title}</td>
+							<td rowspan=4 style="width :50%" ><img src="${item.image}" style="max-width: 100%; height: auto;"/></td>
+							<td style="width :50%">${item.title}</td>
 						</tr>
 						<tr>
-							<td>저자 : ${item.author}</td>
+							<td style="width :50%">저자 : ${item.author}</td>
 						</tr>
 						<tr>
-							<td>출판사 : ${item.publisher}</td>
+							<td style="width :50%">출판사 : ${item.publisher}</td>
 						</tr>						
 						<tr>
-							<td>${item.description}</td>
+							<td style="width :50%">${item.description}</td>
 						</tr>
-						<tr>
-							
-
-							<td>
 							`;
 					if (localStorage.getItem("Authorization") != null) {
 						line += `
-									<input type="button" onclick="bookShelvesRegister('${item.title}', '${item.image}', '${item.author}', '${item.publisher}', '${item.isbn}', '${item.link}')" value="책추가"/>									
+									<input type="button" onclick="bookShelvesRegister('${item.title}', '${item.image}', '${item.author}', '${item.publisher}', '${item.isbn}')" value="책추가"/>									
 								`;
 					}
 
 					line += `
 
-							</td>
-						</tr>						
 						</table>
 						`;
 
@@ -356,7 +350,7 @@ const searchBooks = (targetPage) => {
 };
 
 
-const bookShelvesRegister = (titleRaw, imageRaw, authorRaw, publicsherRaw, isbnRaw, link) => {
+const bookShelvesRegister = (titleRaw, imageRaw, authorRaw, publicsherRaw, isbnRaw) => {
 
 	//정규식
 	const replaceTitle = titleRaw.replace(/(<([^>]+)>)/ig, "");

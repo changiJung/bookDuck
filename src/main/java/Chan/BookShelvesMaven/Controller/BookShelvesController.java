@@ -48,7 +48,7 @@ public class BookShelvesController {
 //		BookShelves bookShelves =  bookShelvesRepository.findByuserId(user.getUserId());
  
 		book.setBookShelevesId(user.getBookShelves().getShelvesNo());
-		book.setTotPage(crwaler.bookPageCraler(book.getIsbn()));
+		//book.setTotPage(crwaler.bookPageCraler(book.getIsbn()));
 				
 		bookRepository.save(book);
 
